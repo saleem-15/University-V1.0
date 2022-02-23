@@ -13,71 +13,104 @@ class Schedule extends StatefulWidget {
 class _ScheduleState extends State<Schedule> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FittedBox(
-          fit: BoxFit.cover,
-          child: DataTable(
-            columns: [
-              DataColumn(
-                  label: Text(
-                'القاعة',
-                style: TextStyle(fontSize: 22),
-              )),
-              DataColumn(
-                  label: Text(
-                'المادة',
-                style: TextStyle(fontSize: 22),
-              )),
-              DataColumn(
-                  label: Text(
-                'الموعد',
-                style: TextStyle(fontSize: 22),
-              )),
-              DataColumn(
-                label: Text(
-                  'اليوم',
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          FittedBox(
+            fit: BoxFit.cover,
+            child: DataTable(
+              columns: [
+                DataColumn(
+                    label: Text(
+                  'القاعة',
                   style: TextStyle(fontSize: 22),
+                )),
+                DataColumn(
+                    label: Text(
+                  'المادة',
+                  style: TextStyle(fontSize: 22),
+                )),
+                DataColumn(
+                    label: Text(
+                  'الموعد',
+                  style: TextStyle(fontSize: 22),
+                )),
+                DataColumn(
+                  label: Text(
+                    'اليوم',
+                    style: TextStyle(fontSize: 22),
+                  ),
                 ),
-              ),
-            ],
-            rows: [
-              DataRow(
-                cells: <DataCell>[
-                  DataCell(
-                    Text(
-                      'A1-305',
-                      style: TextStyle(fontSize: 18),
+              ],
+              rows: Lecture.lecturesList.map((e) {
+                return DataRow(
+                  cells: <DataCell>[
+                    DataCell(
+                      Text(
+                        e.place,
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
-                  ),
-                  DataCell(
-                    Text(
-                      'جرافيك حاسوب',
-                      style: TextStyle(fontSize: 18),
+                    DataCell(
+                      Text(
+                        e.subject,
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
-                  ),
-                  DataCell(
-                    Text(
-                      '11-10',
-                      style: TextStyle(fontSize: 18),
+                    DataCell(
+                      Text(
+                        e.time,
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
-                  ),
-                  DataCell(
-                    Text(
-                      'السبت',
-                      style: TextStyle(fontSize: 18),
+                    DataCell(
+                      Text(
+                        e.day,
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                );
+              }).toList(),
+
+              // [
+              // DataRow(
+              //   cells: <DataCell>[
+              //     DataCell(
+              //       Text(
+              //         'A1-305',
+              //         style: TextStyle(fontSize: 18),
+              //       ),
+              //     ),
+              //     DataCell(
+              //       Text(
+              //         'جرافيك حاسوب',
+              //         style: TextStyle(fontSize: 18),
+              //       ),
+              //     ),
+              //     DataCell(
+              //       Text(
+              //         '11-10',
+              //         style: TextStyle(fontSize: 18),
+              //       ),
+              //     ),
+              //     DataCell(
+              //       Text(
+              //         'السبت',
+              //         style: TextStyle(fontSize: 18),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              //],
+            ),
           ),
-        ),
-        ElevatedButton(
-          onPressed: () => showAddNewSubjectDialog(context),
-          child: Text('أضف موعد جديد'),
-        ),
-      ],
+          ElevatedButton(
+            onPressed: () => showAddNewSubjectDialog(context),
+            child: Text('أضف موعد جديد'),
+          ),
+        ],
+      ),
     );
     // Table(
     //   border: TableBorder.all(),
@@ -102,6 +135,10 @@ class _ScheduleState extends State<Schedule> {
   String? dropdownValue = 'السيت';
   final days = ['السيت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
 
+  var subjectInput = TextEditingController();
+  var timeInput = TextEditingController();
+  var placeInput = TextEditingController();
+
   void showAddNewSubjectDialog(BuildContext ctx) {
     showDialog(
         context: ctx,
@@ -119,6 +156,7 @@ class _ScheduleState extends State<Schedule> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
+                        controller: subjectInput,
                         decoration: InputDecoration(
                           labelText: 'المادة',
                           icon: Icon(Icons.library_books_rounded),
@@ -158,12 +196,15 @@ class _ScheduleState extends State<Schedule> {
                         ),
                       ),
                       TextFormField(
+                        controller: timeInput,
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: 'الساعة',
                           icon: Icon(Icons.access_time_filled_sharp),
                         ),
                       ),
                       TextFormField(
+                        controller: placeInput,
                         decoration: InputDecoration(
                           labelText: 'القاعة',
                           icon: Icon(Icons.place),
@@ -177,7 +218,17 @@ class _ScheduleState extends State<Schedule> {
             actions: [
               ElevatedButton(
                 child: Text("Submit"),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  Lecture.lecturesList.add(
+                    Lecture(
+                      subject: subjectInput.text,
+                      day: dropdownValue!,
+                      time: timeInput.text,
+                      place: placeInput.text,
+                    ),
+                  );
+                  //Navigator.of(context).pop();
+                },
               )
             ],
           );

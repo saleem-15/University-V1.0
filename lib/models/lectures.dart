@@ -11,7 +11,7 @@ class Lecture {
     required this.place,
   });
 
-  final lecturesList = [
+  static final lecturesList = [
     Lecture(
       subject: 'جرافيك حاسوب',
       day: 'الاحد',
