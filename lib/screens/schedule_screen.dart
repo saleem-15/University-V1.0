@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../models/lectures.dart';
+import 'subjects_screen.dart';
 
 class Schedule extends StatefulWidget {
   const Schedule({Key? key}) : super(key: key);
@@ -132,7 +133,8 @@ class _ScheduleState extends State<Schedule> {
     // );
   }
 
-  String? dropdownValue = 'السيت';
+  String? dropdownDay = 'السيت';
+  String? dropdownSubject = SubjectsScreen.subjectsList[0];
   final days = ['السيت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
 
   var subjectInput = TextEditingController();
@@ -155,11 +157,37 @@ class _ScheduleState extends State<Schedule> {
                 child: Form(
                   child: Column(
                     children: <Widget>[
-                      TextFormField(
-                        controller: subjectInput,
-                        decoration: InputDecoration(
-                          labelText: 'المادة',
-                          icon: Icon(Icons.library_books_rounded),
+                      Container(
+                        margin: EdgeInsets.only(left: 10, bottom: 5),
+                        height: 45,
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            width: 2,
+                            color: Theme.of(ctx).primaryColor,
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            isExpanded: true,
+                            value: dropdownSubject,
+                            elevation: 16,
+                            underline: Container(
+                              height: 2,
+                              color: Colors.deepPurpleAccent,
+                            ),
+                            onChanged: (String? newValue) => setState(() {
+                              dropdownSubject = newValue!;
+                            }),
+                            items:
+                                SubjectsScreen.subjectsList.map((String value) {
+                              return DropdownMenuItem(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                       Container(
@@ -176,15 +204,14 @@ class _ScheduleState extends State<Schedule> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                             isExpanded: true,
-                            value: dropdownValue,
+                            value: dropdownDay,
                             elevation: 16,
-                            style: const TextStyle(color: Colors.deepPurple),
                             underline: Container(
                               height: 2,
                               color: Colors.deepPurpleAccent,
                             ),
                             onChanged: (String? newValue) => setState(() {
-                              dropdownValue = newValue;
+                              dropdownDay = newValue;
                             }),
                             items: days.map((String value) {
                               return DropdownMenuItem(
@@ -222,7 +249,7 @@ class _ScheduleState extends State<Schedule> {
                   Lecture.lecturesList.add(
                     Lecture(
                       subject: subjectInput.text,
-                      day: dropdownValue!,
+                      day: dropdownDay!,
                       time: timeInput.text,
                       place: placeInput.text,
                     ),

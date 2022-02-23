@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SubjectsScreen extends StatefulWidget {
   final ThemeData theme;
-  var subjectsList = ["Data Bases", "Computer Graphics", "Quran 4"];
+  static var subjectsList = ["Data Bases", "Computer Graphics", "Quran 4"];
 
   SubjectsScreen({required this.theme});
 
@@ -22,7 +22,8 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
           Container(
             height: 500,
             child: ListView(
-              children: widget.subjectsList.map((e) => Text(e)).toList(),
+              children:
+                  SubjectsScreen.subjectsList.map((e) => Text(e)).toList(),
             ),
           ),
           ElevatedButton(
@@ -40,7 +41,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
 
   void addNewSubject(String subjectName) {
     setState(() {
-      widget.subjectsList.add(subjectName);
+      SubjectsScreen.subjectsList.add(subjectName);
     });
   }
 
