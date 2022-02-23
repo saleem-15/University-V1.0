@@ -60,7 +60,7 @@ class _ScheduleState extends State<Schedule> {
                     ),
                     DataCell(
                       Text(
-                        e.time,
+                        '${e.startingTime}-${e.endingTime}',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
@@ -73,37 +73,6 @@ class _ScheduleState extends State<Schedule> {
                   ],
                 );
               }).toList(),
-
-              // [
-              // DataRow(
-              //   cells: <DataCell>[
-              //     DataCell(
-              //       Text(
-              //         'A1-305',
-              //         style: TextStyle(fontSize: 18),
-              //       ),
-              //     ),
-              //     DataCell(
-              //       Text(
-              //         'جرافيك حاسوب',
-              //         style: TextStyle(fontSize: 18),
-              //       ),
-              //     ),
-              //     DataCell(
-              //       Text(
-              //         '11-10',
-              //         style: TextStyle(fontSize: 18),
-              //       ),
-              //     ),
-              //     DataCell(
-              //       Text(
-              //         'السبت',
-              //         style: TextStyle(fontSize: 18),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              //],
             ),
           ),
           ElevatedButton(
@@ -138,8 +107,9 @@ class _ScheduleState extends State<Schedule> {
   final days = ['السيت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
 
   var subjectInput = TextEditingController();
-  var timeInput = TextEditingController();
   var placeInput = TextEditingController();
+  var startingTimeInput = TextEditingController();
+  var endingTimeInput = TextEditingController();
 
   void showAddNewSubjectDialog(BuildContext ctx) {
     showDialog(
@@ -222,19 +192,40 @@ class _ScheduleState extends State<Schedule> {
                           ),
                         ),
                       ),
-                      TextFormField(
-                        controller: timeInput,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'الساعة',
-                          icon: Icon(Icons.access_time_filled_sharp),
-                        ),
+                      Row(
+                        children: [
+                          Flexible(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 4),
+                              child: TextFormField(
+                                controller: endingTimeInput,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  labelText: 'الى',
+                                ),
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: TextFormField(
+                                controller: startingTimeInput,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  labelText: 'من',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       TextFormField(
                         controller: placeInput,
                         decoration: InputDecoration(
                           labelText: 'القاعة',
-                          icon: Icon(Icons.place),
                         ),
                       ),
                     ],
@@ -250,11 +241,16 @@ class _ScheduleState extends State<Schedule> {
                     Lecture(
                       subject: subjectInput.text,
                       day: dropdownDay!,
-                      time: timeInput.text,
+                      startingTime: startingTimeInput.text,
+                      endingTime: endingTimeInput.text,
                       place: placeInput.text,
                     ),
                   );
-                  //Navigator.of(context).pop();
+                  Lecture.sortLecturesList();
+                  // ignore: unnecessary_this
+                  this.setState(() {});
+
+                  Navigator.of(context).pop();
                 },
               )
             ],
