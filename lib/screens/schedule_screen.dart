@@ -248,7 +248,8 @@ class _ScheduleState extends State<Schedule> {
                   );
                   Lecture.sortLecturesList();
                   // ignore: unnecessary_this
-                  this.setState(() {});
+                  this.setState(
+                      () {}); // this setState is to refresh the schedule screen when a new lecture is added
 
                   Navigator.of(context).pop();
                 },

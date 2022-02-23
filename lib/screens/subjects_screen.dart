@@ -16,25 +16,27 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 500,
-            child: ListView(
-              children:
-                  SubjectsScreen.subjectsList.map((e) => Text(e)).toList(),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 500,
+              child: ListView(
+                children:
+                    SubjectsScreen.subjectsList.map((e) => Text(e)).toList(),
+              ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: () => modalBottomSheet(context),
-            child: const Text('add a subject'),
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(widget.theme.primaryColor),
+            ElevatedButton(
+              onPressed: () => modalBottomSheet(context),
+              child: const Text('add a subject'),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(widget.theme.primaryColor),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'screens/subjects_screen.dart';
 import 'screens/schedule_screen.dart';
+import 'screens/daily_schedule.dart';
 import 'themes/themes.dart';
 
 void main() {
@@ -32,9 +33,7 @@ class _HomePageState extends State<HomePage> {
   static const isLightTheme = true;
   int _currentIndex = 0;
   final List _children = [
-    Container(
-      color: Colors.white,
-    ),
+    DailySchedule(),
     Schedule(),
     SubjectsScreen(
       theme: isLightTheme ? Themes.lightTheme : Themes.darkTheme,

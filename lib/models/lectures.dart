@@ -5,6 +5,7 @@ class Lecture {
   String endingTime;
   String place;
   late int value; //used for sorting
+  late int dayNum; //used in calculation when displaying daily schedule
 
   /*
    starting time for lecture could be [8,9,10,11,12,1,2,3] => 8 times
@@ -26,7 +27,33 @@ class Lecture {
   }) {
     value =
         calculateValue(day, startingTime); //value is calculated automatically
-    print("$subject => value: $value");
+    switch (day) {
+      case 'السيت':
+        dayNum = 6;
+        break;
+
+      case 'الأحد':
+        dayNum = 7;
+        break;
+
+      case 'الاثنين':
+        dayNum = 1;
+        break;
+
+      case 'الثلاثاء':
+        dayNum = 2;
+        break;
+
+      case 'الأربعاء':
+        dayNum = 3;
+        break;
+
+      case 'الخميس':
+        dayNum = 4;
+        break;
+    }
+
+    // print("$subject => value: $value");
   }
 
   static final lecturesList = [
