@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'screens/subjects.dart';
-import 'screens/schedule.dart';
+import 'screens/subjects_screen.dart';
+import 'screens/schedule_screen.dart';
 import 'themes/themes.dart';
 
 void main() {
@@ -66,11 +66,11 @@ class _HomePageState extends State<HomePage> {
             label: 'daily Schedule',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.mail),
+            icon: Icon(Icons.calendar_today),
             label: 'Schedule',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.my_library_books),
             label: 'Subjects',
           ),
         ],
