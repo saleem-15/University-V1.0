@@ -14,28 +14,32 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
   var newSubjectName = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 500,
-              child: ListView(
-                children:
-                    SubjectsScreen.subjectsList.map((e) => Text(e)).toList(),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => modalBottomSheet(context),
+        child: const Icon(Icons.add),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.vertical -
+                    112,
+                //the size of the scrolling column is all the screen height - vertical padding (height taken by system UI)
+                //- 112 (56*2) appBar height + bottomNavigationBar height
+
+                child: ListView(
+                  children: SubjectsScreen.subjectsList
+                      .map((e) => showSubjectCardToScreen(e))
+                      .toList(),
+                ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () => modalBottomSheet(context),
-              child: const Text('add a subject'),
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(widget.theme.primaryColor),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -87,5 +91,20 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
             ),
           );
         });
+  }
+
+  Widget showSubjectCardToScreen(e) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 15),
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: ListTile(
+            title: Text(
+          e,
+          style: const TextStyle(fontSize: 22),
+        )),
+      ),
+    );
   }
 }

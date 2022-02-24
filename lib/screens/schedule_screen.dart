@@ -22,52 +22,56 @@ class _ScheduleState extends State<Schedule> {
             child: DataTable(
               columns: [
                 DataColumn(
-                    label: Text(
-                  'القاعة',
-                  style: TextStyle(fontSize: 22),
-                )),
+                  label: Text(
+                    'القاعة',
+                    style: TextStyle(fontSize: 26),
+                  ),
+                ),
                 DataColumn(
-                    label: Text(
-                  'المادة',
-                  style: TextStyle(fontSize: 22),
-                )),
+                  label: Text(
+                    'المادة',
+                    style: TextStyle(fontSize: 26),
+                  ),
+                ),
                 DataColumn(
-                    label: Text(
-                  'الموعد',
-                  style: TextStyle(fontSize: 22),
-                )),
+                  label: Text(
+                    'الموعد',
+                    style: TextStyle(fontSize: 26),
+                  ),
+                ),
                 DataColumn(
                   label: Text(
                     'اليوم',
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 26),
                   ),
                 ),
               ],
               rows: Lecture.lecturesList.map((e) {
                 return DataRow(
+                  onLongPress: () {},
                   cells: <DataCell>[
                     DataCell(
                       Text(
                         e.place,
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 22),
                       ),
                     ),
                     DataCell(
                       Text(
                         e.subject,
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 22),
                       ),
                     ),
                     DataCell(
                       Text(
                         '${e.startingTime}-${e.endingTime}',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 22),
                       ),
                     ),
                     DataCell(
                       Text(
                         e.day,
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 22),
                       ),
                     ),
                   ],
@@ -75,9 +79,17 @@ class _ScheduleState extends State<Schedule> {
               }).toList(),
             ),
           ),
-          ElevatedButton(
-            onPressed: () => showAddNewSubjectDialog(context),
-            child: Text('أضف موعد جديد'),
+          Row(
+            children: [
+              ElevatedButton(
+                onPressed: () => showAddNewSubjectDialog(context),
+                child: Text('أضف موعد جديد'),
+              ),
+              ElevatedButton(
+                onPressed: () => showAddNewSubjectDialog(context),
+                child: Text('احذف موعد'),
+              ),
+            ],
           ),
         ],
       ),
@@ -102,9 +114,14 @@ class _ScheduleState extends State<Schedule> {
     // );
   }
 
-  String? dropdownDay = 'السيت';
-  String? dropdownSubject = SubjectsScreen.subjectsList[0];
+  String dropdownDay = 'السيت';
+  String dropdownSubject = SubjectsScreen.subjectsList[0];
+  String dropDownStartingTime = startingTime[0];
+  String dropDownEndingTime = endingTime[0];
+
   final days = ['السيت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+  static const startingTime = ['8', '9', '10', '11', '12', '1', '2'];
+  static const endingTime = ['9', '10', '11', '12', '1', '2', '3'];
 
   var subjectInput = TextEditingController();
   var placeInput = TextEditingController();
@@ -161,7 +178,7 @@ class _ScheduleState extends State<Schedule> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 7, left: 10),
+                        margin: EdgeInsets.only(top: 10, left: 10),
                         height: 45,
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
@@ -181,7 +198,7 @@ class _ScheduleState extends State<Schedule> {
                               color: Colors.deepPurpleAccent,
                             ),
                             onChanged: (String? newValue) => setState(() {
-                              dropdownDay = newValue;
+                              dropdownDay = newValue!;
                             }),
                             items: days.map((String value) {
                               return DropdownMenuItem(
@@ -196,30 +213,105 @@ class _ScheduleState extends State<Schedule> {
                         children: [
                           Flexible(
                             flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 4),
-                              child: TextFormField(
-                                controller: endingTimeInput,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  labelText: 'الى',
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10, left: 10),
+                              height: 45,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  width: 2,
+                                  color: Theme.of(ctx).primaryColor,
+                                ),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  hint: Text('الى'),
+                                  isExpanded: true,
+                                  value: dropDownEndingTime,
+                                  elevation: 16,
+                                  underline: Container(
+                                    height: 2,
+                                    color: Colors.deepPurpleAccent,
+                                  ),
+                                  onChanged: (String? newValue) => setState(() {
+                                    dropDownEndingTime = newValue!;
+                                  }),
+                                  items: endingTime.map((String value) {
+                                    return DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                             ),
                           ),
                           Flexible(
                             flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 4),
-                              child: TextFormField(
-                                controller: startingTimeInput,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  labelText: 'من',
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10, left: 10),
+                              height: 45,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  width: 2,
+                                  color: Theme.of(ctx).primaryColor,
+                                ),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  isExpanded: true,
+                                  value: dropDownStartingTime,
+                                  elevation: 16,
+                                  underline: Container(
+                                    height: 2,
+                                    color: Colors.deepPurpleAccent,
+                                  ),
+                                  onChanged: (String? newValue) => setState(() {
+                                    dropDownStartingTime = newValue!;
+                                  }),
+                                  items: startingTime.map((String value) {
+                                    return DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                             ),
                           ),
+                          // Flexible(
+                          //   flex: 1,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(right: 4),
+                          //     child: DropdownButton(
+                          //       child: TextFormField(
+                          //         controller: endingTimeInput,
+                          //         keyboardType: TextInputType.number,
+                          //         decoration: InputDecoration(
+                          //           labelText: 'الى',
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // Flexible(
+                          //   flex: 1,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(left: 4),
+                          //     child: DropdownButton<String>(
+                          //       child: TextFormField(
+                          //         controller: startingTimeInput,
+                          //         keyboardType: TextInputType.number,
+                          //         decoration: InputDecoration(
+                          //           labelText: 'من',
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                       TextFormField(
@@ -239,10 +331,10 @@ class _ScheduleState extends State<Schedule> {
                 onPressed: () {
                   Lecture.lecturesList.add(
                     Lecture(
-                      subject: subjectInput.text,
-                      day: dropdownDay!,
-                      startingTime: startingTimeInput.text,
-                      endingTime: endingTimeInput.text,
+                      subject: dropdownSubject,
+                      day: dropdownDay,
+                      startingTime: dropDownStartingTime,
+                      endingTime: dropDownEndingTime,
                       place: placeInput.text,
                     ),
                   );
