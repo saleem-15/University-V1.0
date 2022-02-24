@@ -51,9 +51,10 @@ class Lecture {
       case 'الخميس':
         dayNum = 4;
         break;
-    }
 
-    // print("$subject => value: $value");
+      default:
+        dayNum = 5; //friday
+    }
   }
 
   static final lecturesList = [

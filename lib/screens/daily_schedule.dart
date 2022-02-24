@@ -6,6 +6,7 @@ class DailySchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    calculateTodayLectures();
     return todayLectures.isEmpty
         ? const Text('There is no lectures today')
         : SingleChildScrollView(
@@ -76,8 +77,12 @@ class DailySchedule extends StatelessWidget {
 
   void calculateTodayLectures() {
     var currentDay = DateTime.now().weekday;
+    print("today is $currentDay");
+
+    todayLectures.clear(); // clear the list of the lectures
 
     for (var lecuture in Lecture.lecturesList) {
+      //add today's lectures to the list
       if (lecuture.dayNum == currentDay) {
         todayLectures.add(lecuture);
       }
