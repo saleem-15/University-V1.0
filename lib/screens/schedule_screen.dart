@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import '../models/lectures.dart';
 import '../models/subject.dart';
+import 'package:hive/hive.dart';
+// ignore: unused_import
 import 'subjects_screen.dart';
 
 class Schedule extends StatefulWidget {
@@ -30,11 +32,9 @@ class _ScheduleState extends State<Schedule> {
                             context: ctx,
                             builder: (ctx) {
                               return AlertDialog(
-                                content: Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('body'),
-                                  ),
+                                content: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('body'),
                                 ),
                               );
                             });
@@ -118,7 +118,7 @@ class _ScheduleState extends State<Schedule> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          content: Container(
+                          content: SizedBox(
                             height: 100,
                             child: Column(
                               children: [
@@ -144,7 +144,7 @@ class _ScheduleState extends State<Schedule> {
                         );
                       });
                 },
-                child: Text('delete'))
+                child: Text('Delete a lecture'))
           ],
         ),
       ),

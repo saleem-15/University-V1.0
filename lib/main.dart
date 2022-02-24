@@ -1,16 +1,24 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'screens/subjects_screen.dart';
 import 'screens/schedule_screen.dart';
 import 'screens/daily_schedule.dart';
 import 'themes/themes.dart';
 
-void main() {
+// late Box box;
+Future<void> main() async {
+  // await Hive.initFlutter();
+  //  box = await Hive.openBox('Box');
+  // Hive.registerAdapter(MyObjectAdapter());
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,6 +32,8 @@ class MyApp extends StatelessWidget {
 /////////////////////////////////////////// here the code for the actual UI \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 class HomePage extends StatefulWidget {
   var x = true;
+
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();

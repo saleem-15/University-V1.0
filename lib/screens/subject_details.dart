@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '../models/subject.dart';
 
 class SubjectDetails extends StatelessWidget {
   Subject subject;
-  SubjectDetails({required this.subject});
+  SubjectDetails({Key? key, required this.subject}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

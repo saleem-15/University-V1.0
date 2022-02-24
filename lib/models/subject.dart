@@ -1,3 +1,5 @@
+import 'package:hive/hive.dart';
+
 class Subject {
   static int _idNum = 0;
   late int id;

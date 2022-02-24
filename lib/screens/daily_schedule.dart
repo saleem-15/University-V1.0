@@ -4,6 +4,8 @@ import '../models/lectures.dart';
 class DailySchedule extends StatelessWidget {
   List<Lecture> todayLectures = [];
 
+  DailySchedule({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     calculateTodayLectures();
@@ -94,7 +96,6 @@ class DailySchedule extends StatelessWidget {
 
   void calculateTodayLectures() {
     var currentDay = DateTime.now().weekday;
-    print("today is $currentDay");
 
     todayLectures.clear(); // clear the list of the lectures
 

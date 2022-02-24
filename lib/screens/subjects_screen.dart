@@ -5,7 +5,7 @@ import 'subject_details.dart';
 class SubjectsScreen extends StatefulWidget {
   final ThemeData theme;
 
-  SubjectsScreen({required this.theme});
+  const SubjectsScreen({Key? key, required this.theme}) : super(key: key);
 
   @override
   _SubjectsScreenState createState() => _SubjectsScreenState();
