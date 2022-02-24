@@ -78,7 +78,7 @@ class Lecture {
     int result = 0;
 
     switch (day) {
-      case 'السيت':
+      case 'السبت':
         result = 0;
         break;
 

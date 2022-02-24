@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import '../models/lectures.dart';
 import 'subjects_screen.dart';
@@ -86,7 +86,14 @@ class _ScheduleState extends State<Schedule> {
                 child: Text('أضف موعد جديد'),
               ),
               ElevatedButton(
-                onPressed: () => showAddNewSubjectDialog(context),
+                onPressed: () {
+                  Fluttertoast.showToast(
+                    msg: "Hi Codesinsider !!",
+                    toastLength: Toast.LENGTH_LONG,
+                    //backgroundColor: Color.fromARGB(255, 241, 48, 48),
+                    //fontSize: 20
+                  );
+                },
                 child: Text('احذف موعد'),
               ),
             ],
@@ -114,12 +121,12 @@ class _ScheduleState extends State<Schedule> {
     // );
   }
 
-  String dropdownDay = 'السيت';
+  String dropdownDay = 'السبت';
   String dropdownSubject = SubjectsScreen.subjectsList[0];
   String dropDownStartingTime = startingTime[0];
   String dropDownEndingTime = endingTime[0];
 
-  final days = ['السيت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+  final days = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
   static const startingTime = ['8', '9', '10', '11', '12', '1', '2'];
   static const endingTime = ['9', '10', '11', '12', '1', '2', '3'];
 
@@ -329,6 +336,24 @@ class _ScheduleState extends State<Schedule> {
               ElevatedButton(
                 child: Text("Submit"),
                 onPressed: () {
+                  if (int.parse(dropDownStartingTime) >=
+                      int.parse(dropDownEndingTime)) {
+                    Fluttertoast.showToast(
+                      msg: "يجب ان تكون نهاية الوقت اكبر من بدايته!!",
+                      toastLength: Toast.LENGTH_LONG,
+                    );
+
+                    return;
+                  }
+
+                  if (placeInput.text.isEmpty) {
+                    Fluttertoast.showToast(
+                      msg: "حدد القاعة !!",
+                      toastLength: Toast.LENGTH_LONG,
+                    );
+
+                    return;
+                  }
                   Lecture.lecturesList.add(
                     Lecture(
                       subject: dropdownSubject,
