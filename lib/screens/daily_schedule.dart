@@ -12,7 +12,19 @@ class DailySchedule extends StatelessWidget {
         title: const Text('Daily Schedule'),
       ),
       body: todayLectures.isEmpty
-          ? const Text('There is no lectures today')
+          ? Column(
+              children: [
+                const Padding(padding: EdgeInsets.only(top: 100)),
+                Image.asset('lib/assests/output-onlinejpgtools.png'),
+                const Padding(
+                  padding: EdgeInsets.only(top: 30),
+                  child: Text(
+                    'There is no lectures today',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+              ],
+            )
           : SingleChildScrollView(
               child: Column(
                 children: [

@@ -18,6 +18,22 @@ class _ScheduleState extends State<Schedule> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Schedule'),
+        actions: [
+          PopupMenuButton(
+              itemBuilder: (context) => [
+                    PopupMenuItem(
+                      child: const Text("احذف موعد"),
+                      value: 1,
+                      onTap: () {
+                        //Subject.deleteSubject(subject);
+                      },
+                    ),
+                  ]),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => showAddNewSubjectDialog(context),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -84,25 +100,22 @@ class _ScheduleState extends State<Schedule> {
                 }).toList(),
               ),
             ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () => showAddNewSubjectDialog(context),
-                  child: Text('أضف موعد جديد'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Fluttertoast.showToast(
-                      msg: "Hi Codesinsider !!",
-                      toastLength: Toast.LENGTH_LONG,
-                      //backgroundColor: Color.fromARGB(255, 241, 48, 48),
-                      //fontSize: 20
-                    );
-                  },
-                  child: Text('احذف موعد'),
-                ),
-              ],
-            ),
+            ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          content: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('body'),
+                            ),
+                          ),
+                        );
+                      });
+                },
+                child: Text('delete'))
           ],
         ),
       ),

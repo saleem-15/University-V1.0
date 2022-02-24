@@ -57,7 +57,7 @@ class Lecture {
     }
   }
 
-  static final lecturesList = [
+  static var lecturesList = [
     Lecture(
       subject: 'جرافيك حاسوب',
       day: 'الاحد',
@@ -136,5 +136,9 @@ class Lecture {
     lecturesList.sort((a, b) {
       return a.value.compareTo(b.value);
     });
+  }
+
+  static void deleteLecture(Lecture lecture) {
+    lecturesList.remove(lecture);
   }
 }
