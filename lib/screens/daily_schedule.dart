@@ -7,72 +7,77 @@ class DailySchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     calculateTodayLectures();
-    return todayLectures.isEmpty
-        ? const Text('There is no lectures today')
-        : SingleChildScrollView(
-            child: Column(
-              children: [
-                FittedBox(
-                  fit: BoxFit.cover,
-                  child: DataTable(
-                    columns: const [
-                      DataColumn(
-                          label: Text(
-                        'القاعة',
-                        style: TextStyle(fontSize: 22),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        'المادة',
-                        style: TextStyle(fontSize: 22),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        'الموعد',
-                        style: TextStyle(fontSize: 22),
-                      )),
-                      DataColumn(
-                        label: Text(
-                          'اليوم',
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Daily Schedule'),
+      ),
+      body: todayLectures.isEmpty
+          ? const Text('There is no lectures today')
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  FittedBox(
+                    fit: BoxFit.cover,
+                    child: DataTable(
+                      columns: const [
+                        DataColumn(
+                            label: Text(
+                          'القاعة',
                           style: TextStyle(fontSize: 22),
+                        )),
+                        DataColumn(
+                            label: Text(
+                          'المادة',
+                          style: TextStyle(fontSize: 22),
+                        )),
+                        DataColumn(
+                            label: Text(
+                          'الموعد',
+                          style: TextStyle(fontSize: 22),
+                        )),
+                        DataColumn(
+                          label: Text(
+                            'اليوم',
+                            style: TextStyle(fontSize: 22),
+                          ),
                         ),
-                      ),
-                    ],
-                    rows: todayLectures.map((e) {
-                      return DataRow(
-                        cells: <DataCell>[
-                          DataCell(
-                            Text(
-                              e.place,
-                              style: const TextStyle(fontSize: 18),
+                      ],
+                      rows: todayLectures.map((e) {
+                        return DataRow(
+                          cells: <DataCell>[
+                            DataCell(
+                              Text(
+                                e.place,
+                                style: const TextStyle(fontSize: 18),
+                              ),
                             ),
-                          ),
-                          DataCell(
-                            Text(
-                              e.subject,
-                              style: const TextStyle(fontSize: 18),
+                            DataCell(
+                              Text(
+                                e.subject,
+                                style: const TextStyle(fontSize: 18),
+                              ),
                             ),
-                          ),
-                          DataCell(
-                            Text(
-                              '${e.startingTime}-${e.endingTime}',
-                              style: const TextStyle(fontSize: 18),
+                            DataCell(
+                              Text(
+                                '${e.startingTime}-${e.endingTime}',
+                                style: const TextStyle(fontSize: 18),
+                              ),
                             ),
-                          ),
-                          DataCell(
-                            Text(
-                              e.day,
-                              style: const TextStyle(fontSize: 18),
+                            DataCell(
+                              Text(
+                                e.day,
+                                style: const TextStyle(fontSize: 18),
+                              ),
                             ),
-                          ),
-                        ],
-                      );
-                    }).toList(),
+                          ],
+                        );
+                      }).toList(),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          );
+    );
   }
 
   void calculateTodayLectures() {

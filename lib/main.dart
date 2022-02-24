@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('University')),
+      // appBar: AppBar(title: Text('University')),
       body: _children[
           _currentIndex], //the widget that will be displayed between our app bar and bottom navigation bar
       bottomNavigationBar: BottomNavigationBar(

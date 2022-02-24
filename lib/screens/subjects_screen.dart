@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import '../models/subject.dart';
+import 'subject_details.dart';
 
 class SubjectsScreen extends StatefulWidget {
   final ThemeData theme;
-  static var subjectsList = ["Data Bases", "Computer Graphics", "Quran 4"];
 
   SubjectsScreen({required this.theme});
 
@@ -12,9 +13,13 @@ class SubjectsScreen extends StatefulWidget {
 
 class _SubjectsScreenState extends State<SubjectsScreen> {
   var newSubjectName = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Subjects'),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => modalBottomSheet(context),
         child: const Icon(Icons.add),
@@ -23,7 +28,6 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
         padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 height: MediaQuery.of(context).size.height -
@@ -33,8 +37,8 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                 //- 112 (56*2) appBar height + bottomNavigationBar height
 
                 child: ListView(
-                  children: SubjectsScreen.subjectsList
-                      .map((e) => showSubjectCardToScreen(e))
+                  children: Subject.subjectsList
+                      .map((subject) => showSubjectCardToScreen(subject))
                       .toList(),
                 ),
               ),
@@ -47,7 +51,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
 
   void addNewSubject(String subjectName) {
     setState(() {
-      SubjectsScreen.subjectsList.add(subjectName);
+      Subject.subjectsList.add(Subject(name: subjectName));
     });
   }
 
@@ -93,17 +97,30 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
         });
   }
 
-  Widget showSubjectCardToScreen(e) {
+  Widget showSubjectCardToScreen(Subject subject) {
     return Card(
       margin: const EdgeInsets.only(bottom: 15),
       elevation: 5,
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: ListTile(
-            title: Text(
-          e,
-          style: const TextStyle(fontSize: 22),
-        )),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SubjectDetails(
+                        subject: subject,
+                      )),
+            ).then((value) {
+              //this code [then(){...} ] makes sure when we get back to this page ,its refreshed
+              setState(() {});
+            });
+          },
+          title: Text(
+            subject.name,
+            style: const TextStyle(fontSize: 22),
+          ),
+        ),
       ),
     );
   }

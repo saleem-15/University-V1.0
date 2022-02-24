@@ -2,6 +2,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import '../models/lectures.dart';
+import '../models/subject.dart';
 import 'subjects_screen.dart';
 
 class Schedule extends StatefulWidget {
@@ -14,91 +15,96 @@ class Schedule extends StatefulWidget {
 class _ScheduleState extends State<Schedule> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          FittedBox(
-            fit: BoxFit.cover,
-            child: DataTable(
-              columns: [
-                DataColumn(
-                  label: Text(
-                    'القاعة',
-                    style: TextStyle(fontSize: 26),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Schedule'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            FittedBox(
+              fit: BoxFit.cover,
+              child: DataTable(
+                columns: [
+                  DataColumn(
+                    label: Text(
+                      'القاعة',
+                      style: TextStyle(fontSize: 26),
+                    ),
                   ),
+                  DataColumn(
+                    label: Text(
+                      'المادة',
+                      style: TextStyle(fontSize: 26),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'الموعد',
+                      style: TextStyle(fontSize: 26),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'اليوم',
+                      style: TextStyle(fontSize: 26),
+                    ),
+                  ),
+                ],
+                rows: Lecture.lecturesList.map((e) {
+                  return DataRow(
+                    onLongPress: () {},
+                    cells: <DataCell>[
+                      DataCell(
+                        Text(
+                          e.place,
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
+                      DataCell(
+                        Text(
+                          e.subject,
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
+                      DataCell(
+                        Text(
+                          '${e.startingTime}-${e.endingTime}',
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
+                      DataCell(
+                        Text(
+                          e.day,
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () => showAddNewSubjectDialog(context),
+                  child: Text('أضف موعد جديد'),
                 ),
-                DataColumn(
-                  label: Text(
-                    'المادة',
-                    style: TextStyle(fontSize: 26),
-                  ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'الموعد',
-                    style: TextStyle(fontSize: 26),
-                  ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'اليوم',
-                    style: TextStyle(fontSize: 26),
-                  ),
+                ElevatedButton(
+                  onPressed: () {
+                    Fluttertoast.showToast(
+                      msg: "Hi Codesinsider !!",
+                      toastLength: Toast.LENGTH_LONG,
+                      //backgroundColor: Color.fromARGB(255, 241, 48, 48),
+                      //fontSize: 20
+                    );
+                  },
+                  child: Text('احذف موعد'),
                 ),
               ],
-              rows: Lecture.lecturesList.map((e) {
-                return DataRow(
-                  onLongPress: () {},
-                  cells: <DataCell>[
-                    DataCell(
-                      Text(
-                        e.place,
-                        style: TextStyle(fontSize: 22),
-                      ),
-                    ),
-                    DataCell(
-                      Text(
-                        e.subject,
-                        style: TextStyle(fontSize: 22),
-                      ),
-                    ),
-                    DataCell(
-                      Text(
-                        '${e.startingTime}-${e.endingTime}',
-                        style: TextStyle(fontSize: 22),
-                      ),
-                    ),
-                    DataCell(
-                      Text(
-                        e.day,
-                        style: TextStyle(fontSize: 22),
-                      ),
-                    ),
-                  ],
-                );
-              }).toList(),
             ),
-          ),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () => showAddNewSubjectDialog(context),
-                child: Text('أضف موعد جديد'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Fluttertoast.showToast(
-                    msg: "Hi Codesinsider !!",
-                    toastLength: Toast.LENGTH_LONG,
-                    //backgroundColor: Color.fromARGB(255, 241, 48, 48),
-                    //fontSize: 20
-                  );
-                },
-                child: Text('احذف موعد'),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
     // Table(
@@ -122,7 +128,7 @@ class _ScheduleState extends State<Schedule> {
   }
 
   String dropdownDay = 'السبت';
-  String dropdownSubject = SubjectsScreen.subjectsList[0];
+  String dropdownSubject = Subject.subjectsList[0].name;
   String dropDownStartingTime = startingTime[0];
   String dropDownEndingTime = endingTime[0];
 
@@ -174,11 +180,10 @@ class _ScheduleState extends State<Schedule> {
                             onChanged: (String? newValue) => setState(() {
                               dropdownSubject = newValue!;
                             }),
-                            items:
-                                SubjectsScreen.subjectsList.map((String value) {
+                            items: Subject.subjectsList.map((Subject sub) {
                               return DropdownMenuItem(
-                                value: value,
-                                child: Text(value),
+                                value: sub.name,
+                                child: Text(sub.name),
                               );
                             }).toList(),
                           ),
