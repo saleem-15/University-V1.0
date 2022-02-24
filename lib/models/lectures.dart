@@ -141,4 +141,8 @@ class Lecture {
   static void deleteLecture(Lecture lecture) {
     lecturesList.remove(lecture);
   }
+
+  static void deleteLectureAtNumber(int number) {
+    lecturesList.removeAt(number - 1);
+  }
 }

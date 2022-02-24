@@ -13,19 +13,31 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
+  var numberOfLectureToBeDeleted = TextEditingController();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext mainContext) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Schedule'),
         actions: [
           PopupMenuButton(
-              itemBuilder: (context) => [
+              itemBuilder: (ctx) => [
                     PopupMenuItem(
                       child: const Text("احذف موعد"),
                       value: 1,
                       onTap: () {
-                        //Subject.deleteSubject(subject);
+                        showDialog(
+                            context: ctx,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                content: Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('body'),
+                                  ),
+                                ),
+                              );
+                            });
                       },
                     ),
                   ]),
@@ -107,9 +119,26 @@ class _ScheduleState extends State<Schedule> {
                       builder: (context) {
                         return AlertDialog(
                           content: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('body'),
+                            height: 100,
+                            child: Column(
+                              children: [
+                                TextField(
+                                  controller: numberOfLectureToBeDeleted,
+                                  decoration: InputDecoration(
+                                      hintText:
+                                          'ادخل رقم السطر اللي بدك تحذفه'),
+                                  keyboardType: TextInputType.number,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Lecture.deleteLectureAtNumber(int.parse(
+                                        numberOfLectureToBeDeleted.text));
+                                    setState(() {});
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Delete'),
+                                ),
+                              ],
                             ),
                           ),
                         );
@@ -120,24 +149,6 @@ class _ScheduleState extends State<Schedule> {
         ),
       ),
     );
-    // Table(
-    //   border: TableBorder.all(),
-    //   children: [
-    //     TableRow(children: [
-    //       Column(
-    //         children: const [Text('Day')], //the name of the day is in a column
-    //       ),
-    //       Column(
-    //         // the time and date of the lectures is stored as (Column of Rows)
-    //         children: [
-    //           Row(
-    //             children: [Text('Date'), Text('subjectName'), Text('place')],
-    //           ),
-    //         ],
-    //       )
-    //     ])
-    //   ],
-    // );
   }
 
   String dropdownDay = 'السبت';
@@ -307,36 +318,6 @@ class _ScheduleState extends State<Schedule> {
                               ),
                             ),
                           ),
-                          // Flexible(
-                          //   flex: 1,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.only(right: 4),
-                          //     child: DropdownButton(
-                          //       child: TextFormField(
-                          //         controller: endingTimeInput,
-                          //         keyboardType: TextInputType.number,
-                          //         decoration: InputDecoration(
-                          //           labelText: 'الى',
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // Flexible(
-                          //   flex: 1,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.only(left: 4),
-                          //     child: DropdownButton<String>(
-                          //       child: TextFormField(
-                          //         controller: startingTimeInput,
-                          //         keyboardType: TextInputType.number,
-                          //         decoration: InputDecoration(
-                          //           labelText: 'من',
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                       TextFormField(
@@ -394,3 +375,52 @@ class _ScheduleState extends State<Schedule> {
         });
   }
 }
+    // Table(
+    //   border: TableBorder.all(),
+    //   children: [
+    //     TableRow(children: [
+    //       Column(
+    //         children: const [Text('Day')], //the name of the day is in a column
+    //       ),
+    //       Column(
+    //         // the time and date of the lectures is stored as (Column of Rows)
+    //         children: [
+    //           Row(
+    //             children: [Text('Date'), Text('subjectName'), Text('place')],
+    //           ),
+    //         ],
+    //       )
+    //     ])
+    //   ],
+    // );
+
+    // Flexible(
+                          //   flex: 1,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(right: 4),
+                          //     child: DropdownButton(
+                          //       child: TextFormField(
+                          //         controller: endingTimeInput,
+                          //         keyboardType: TextInputType.number,
+                          //         decoration: InputDecoration(
+                          //           labelText: 'الى',
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // Flexible(
+                          //   flex: 1,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(left: 4),
+                          //     child: DropdownButton<String>(
+                          //       child: TextFormField(
+                          //         controller: startingTimeInput,
+                          //         keyboardType: TextInputType.number,
+                          //         decoration: InputDecoration(
+                          //           labelText: 'من',
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),

@@ -19,7 +19,7 @@ class DailySchedule extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(top: 30),
                   child: Text(
-                    'There is no lectures today',
+                    'You dont have any lectures today!',
                     style: TextStyle(fontSize: 24),
                   ),
                 ),
