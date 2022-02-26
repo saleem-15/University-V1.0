@@ -114,7 +114,8 @@ class _ScheduleState extends State<Schedule> {
   }
 
   String dropdownDay = 'السبت';
-  String dropdownSubject = Subject.subjectsList[0].name;
+  String? dropdownSubject;
+  //  = Subject.subjectsList[0].name;
   String? dropDownStartingTime;
   //= startingTime[0];
   String? dropDownEndingTime;
@@ -144,159 +145,166 @@ class _ScheduleState extends State<Schedule> {
               builder: (ctx, setState) => Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Form(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        //subject drop down
-                        margin: EdgeInsets.only(left: 10, bottom: 5),
-                        height: 45,
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            width: 2,
-                            color: Theme.of(ctx).primaryColor,
-                          ),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            isExpanded: true,
-                            value: dropdownSubject,
-                            elevation: 16,
-                            underline: Container(
-                              height: 2,
-                              color: Colors.deepPurpleAccent,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 10),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          //subject drop down
+                          height: 45,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.blue,
                             ),
-                            onChanged: (String? newValue) => setState(() {
-                              dropdownSubject = newValue!;
-                            }),
-                            items: Subject.subjectsList.map((Subject sub) {
-                              return DropdownMenuItem(
-                                value: sub.name,
-                                child: Text(sub.name),
-                              );
-                            }).toList(),
                           ),
-                        ),
-                      ),
-                      Container(
-                        //day drop down
-                        margin: EdgeInsets.only(top: 10, left: 10),
-                        height: 45,
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            width: 2,
-                            color: Theme.of(ctx).primaryColor,
-                          ),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            isExpanded: true,
-                            value: dropdownDay,
-                            elevation: 16,
-                            underline: Container(
-                              height: 2,
-                              color: Colors.deepPurpleAccent,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              isExpanded: true,
+                              hint: Text('المادة'),
+                              value: dropdownSubject,
+                              elevation: 16,
+                              onChanged: (String? newValue) => setState(() {
+                                dropdownSubject = newValue!;
+                              }),
+                              items: Subject.subjectsList.map((Subject sub) {
+                                return DropdownMenuItem(
+                                  value: sub.name,
+                                  child: Text(sub.name),
+                                );
+                              }).toList(),
                             ),
-                            onChanged: (String? newValue) => setState(() {
-                              dropdownDay = newValue!;
-                            }),
-                            items: days.map((String value) {
-                              return DropdownMenuItem(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
                           ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Flexible(
-                            //ending time dropDown
-                            flex: 1,
-                            child: Container(
-                              margin: EdgeInsets.only(top: 10, left: 10),
-                              height: 45,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  width: 2,
-                                  color: Theme.of(ctx).primaryColor,
-                                ),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  hint: Text('الى'),
-                                  isExpanded: true,
-                                  value: dropDownEndingTime,
-                                  elevation: 16,
-                                  underline: Container(
-                                    height: 2,
-                                    color: Colors.deepPurpleAccent,
+                        Container(
+                          //day drop down
+                          margin: EdgeInsets.only(
+                            top: 15,
+                          ),
+                          height: 45,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              isExpanded: true,
+                              value: dropdownDay,
+                              elevation: 16,
+                              onChanged: (String? newValue) => setState(() {
+                                dropdownDay = newValue!;
+                              }),
+                              items: days.map((String value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Flexible(
+                              //ending time dropDown
+                              flex: 1,
+                              child: Container(
+                                margin: EdgeInsets.only(top: 15, right: 10),
+                                height: 45,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    width: 2,
+                                    color: Colors.blue,
                                   ),
-                                  onChanged: (String? newValue) => setState(() {
-                                    dropDownEndingTime = newValue;
-                                  }),
-                                  items: endingTime.map((String value) {
-                                    return DropdownMenuItem(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            //starting time dropDown
-                            flex: 1,
-                            child: Container(
-                              margin: EdgeInsets.only(top: 10, left: 10),
-                              height: 45,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  width: 2,
-                                  color: Theme.of(ctx).primaryColor,
-                                ),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  hint: Text('من'),
-                                  isExpanded: true,
-                                  value: dropDownStartingTime,
-                                  elevation: 16,
-                                  underline: Container(
-                                    height: 2,
-                                    color: Colors.deepPurpleAccent,
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    hint: Text('الى'),
+                                    isExpanded: true,
+                                    value: dropDownEndingTime,
+                                    elevation: 16,
+                                    onChanged: (String? newValue) =>
+                                        setState(() {
+                                      dropDownEndingTime = newValue;
+                                    }),
+                                    items: endingTime.map((String value) {
+                                      return DropdownMenuItem(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
                                   ),
-                                  onChanged: (String? newValue) => setState(() {
-                                    dropDownStartingTime = newValue!;
-                                  }),
-                                  items: startingTime.map((String value) {
-                                    return DropdownMenuItem(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      TextFormField(
-                        controller: placeInput,
-                        decoration: InputDecoration(
-                          labelText: 'القاعة',
+                            Flexible(
+                              //starting time dropDown
+                              flex: 1,
+                              child: Container(
+                                margin: EdgeInsets.only(top: 15, left: 10),
+                                height: 45,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    width: 2,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    hint: Text('من'),
+                                    isExpanded: true,
+                                    value: dropDownStartingTime,
+                                    elevation: 16,
+                                    onChanged: (String? newValue) =>
+                                        setState(() {
+                                      dropDownStartingTime = newValue!;
+                                    }),
+                                    items: startingTime.map((String value) {
+                                      return DropdownMenuItem(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: 15,
+                          ),
+                          height: 45,
+                          // padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: TextField(
+                            controller: placeInput,
+                            decoration: const InputDecoration(
+                                constraints: BoxConstraints(maxHeight: 45),
+                                labelText: 'القاعة',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0)))),
+                          ),
+                        ),
+                        // TextFormField(
+                        //   controller: placeInput,
+                        //   decoration: InputDecoration(
+                        //     labelText: 'القاعة',
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -315,15 +323,14 @@ class _ScheduleState extends State<Schedule> {
                   style: TextStyle(fontSize: 18),
                 ),
                 onPressed: () {
-                  if (startingTime.indexOf(dropDownStartingTime!) >
-                      endingTime.indexOf(dropDownEndingTime!)) {
+                  var start = startingTime.indexOf(dropDownStartingTime!);
+                  var end = endingTime.indexOf(dropDownEndingTime!);
+
+                  if (start > end) {
                     Fluttertoast.showToast(
                       msg: "يجب ان تكون نهاية الوقت اكبر من بدايته!!",
                       toastLength: Toast.LENGTH_LONG,
                     );
-
-                    var x = startingTime.indexOf(dropDownStartingTime!);
-                    var y = endingTime.indexOf(dropDownEndingTime!);
 
                     return;
                   }
@@ -338,7 +345,7 @@ class _ScheduleState extends State<Schedule> {
                   }
                   Lecture.lecturesList.add(
                     Lecture(
-                      subject: dropdownSubject,
+                      subject: dropdownSubject!,
                       day: dropdownDay,
                       startingTime: dropDownStartingTime!,
                       endingTime: dropDownEndingTime!,

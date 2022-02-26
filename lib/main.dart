@@ -2,15 +2,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:university/models/subject.dart';
 import 'screens/subjects_screen.dart';
 import 'screens/schedule_screen.dart';
 import 'screens/daily_schedule.dart';
 import 'themes/themes.dart';
 
-// late Box box;
+late Box box;
 Future<void> main() async {
-  // await Hive.initFlutter();
-  //  box = await Hive.openBox('Box');
+  await Hive.initFlutter();
+  await Hive.openBox('Box');
+  box = Hive.box('Box');
+
+  List<Subject> x = [Subject(name: 'math'), Subject(name: 'science')];
+
+  box.add(x);
+
   // Hive.registerAdapter(MyObjectAdapter());
 
   runApp(MyApp());

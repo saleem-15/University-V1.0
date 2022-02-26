@@ -6,7 +6,7 @@ class SubjectDetails extends StatelessWidget {
   SubjectDetails({Key? key, required this.subject}) : super(key: key);
 
   @override
-  Widget build(BuildContext mainScreenContext) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(subject.name),
@@ -16,7 +16,7 @@ class SubjectDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               onSelected: (value) {
                 if (value == 1) {
-                  showDeleteConfirmation(mainScreenContext);
+                  showDeleteConfirmation(context);
                 }
               },
               itemBuilder: (context) => [

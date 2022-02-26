@@ -21,7 +21,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
         title: const Text('My Subjects'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => modalBottomSheet(context),
+        onPressed: () => showAddNewSubjectDialog(),
         child: const Icon(Icons.add),
       ),
       body: Padding(
@@ -55,48 +55,6 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
     });
   }
 
-  void modalBottomSheet(BuildContext ctx) {
-    showModalBottomSheet(
-        context: ctx,
-        builder: (_) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-            child: SizedBox(
-              height: 400,
-              child: Column(
-                children: [
-                  TextField(
-                    controller: newSubjectName,
-                    decoration: InputDecoration(
-                      hintText: 'Subject name',
-                      contentPadding: const EdgeInsets.all(15),
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: widget.theme.primaryColor),
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
-                  ElevatedButton(
-                    onPressed: () => addNewSubject(newSubjectName.text),
-                    child: const Text(
-                      'Add the subject',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(widget.theme.primaryColor),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
   Widget showSubjectCardToScreen(Subject subject) {
     return Card(
       margin: const EdgeInsets.only(bottom: 15),
@@ -123,5 +81,42 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
         ),
       ),
     );
+  }
+
+  void showAddNewSubjectDialog() {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title: const Text('Add new subject'),
+            content: SizedBox(
+              height: 130,
+              child: Column(
+                children: [
+                  TextField(
+                    controller: newSubjectName,
+                    decoration: const InputDecoration(
+                        constraints: BoxConstraints(maxHeight: 50),
+                        label: Text('Subject name'),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.0)))),
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 15)),
+                  ElevatedButton(
+                      onPressed: () {
+                        if (newSubjectName.text.isNotEmpty) {
+                          addNewSubject(newSubjectName.text);
+                          newSubjectName.clear();
+                        }
+                      },
+                      child: const Text('Add Subject'))
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
