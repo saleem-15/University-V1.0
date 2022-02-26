@@ -6,30 +6,56 @@ class SubjectDetails extends StatelessWidget {
   SubjectDetails({Key? key, required this.subject}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext mainScreenContext) {
     return Scaffold(
       appBar: AppBar(
         title: Text(subject.name),
         actions: [
           PopupMenuButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              onSelected: (value) {
+                if (value == 1) {
+                  showDeleteConfirmation(mainScreenContext);
+                }
+              },
               itemBuilder: (context) => [
-                    PopupMenuItem(
-                      child: const Text("delete this subject"),
+                    const PopupMenuItem(
+                      child: Text("delete this subject"),
                       value: 1,
-                      onTap: () {
-                        Subject.deleteSubject(subject);
-                        Navigator.of(context).pop();
-                      },
                     ),
                     const PopupMenuItem(
-                      child: Text("Second"),
+                      child: Text("test"),
                       value: 2,
                     )
                   ]),
         ],
       ),
-      body: Container(),
     );
+  }
+
+  void showDeleteConfirmation(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title: const Text('Are You sure you want to delete this subject'),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Cancel')),
+              TextButton(
+                  onPressed: () {
+                    Subject.deleteSubject(subject);
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Delete')),
+            ],
+          );
+        });
   }
 }
 

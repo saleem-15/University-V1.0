@@ -28,7 +28,7 @@ class Lecture {
     value =
         calculateValue(day, startingTime); //value is calculated automatically
     switch (day) {
-      case 'السيت':
+      case 'السبت':
         dayNum = 6;
         break;
 
@@ -60,7 +60,7 @@ class Lecture {
   static var lecturesList = [
     Lecture(
       subject: 'جرافيك حاسوب',
-      day: 'الاحد',
+      day: 'الأحد',
       startingTime: '12',
       endingTime: '2',
       place: 'A1-202',

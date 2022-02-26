@@ -23,22 +23,17 @@ class _ScheduleState extends State<Schedule> {
         title: const Text('Schedule'),
         actions: [
           PopupMenuButton(
+              onSelected: (value) {
+                if (value == 1) {
+                  showDeleteLectureDialog(context);
+                }
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               itemBuilder: (ctx) => [
                     PopupMenuItem(
                       child: const Text("احذف موعد"),
                       value: 1,
-                      onTap: () {
-                        showDialog(
-                            context: ctx,
-                            builder: (ctx) {
-                              return AlertDialog(
-                                content: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('body'),
-                                ),
-                              );
-                            });
-                      },
                     ),
                   ]),
         ],
@@ -112,39 +107,6 @@ class _ScheduleState extends State<Schedule> {
                 }).toList(),
               ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: SizedBox(
-                            height: 100,
-                            child: Column(
-                              children: [
-                                TextField(
-                                  controller: numberOfLectureToBeDeleted,
-                                  decoration: InputDecoration(
-                                      hintText:
-                                          'ادخل رقم السطر اللي بدك تحذفه'),
-                                  keyboardType: TextInputType.number,
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Lecture.deleteLectureAtNumber(int.parse(
-                                        numberOfLectureToBeDeleted.text));
-                                    setState(() {});
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('Delete'),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      });
-                },
-                child: Text('Delete a lecture'))
           ],
         ),
       ),
@@ -153,8 +115,10 @@ class _ScheduleState extends State<Schedule> {
 
   String dropdownDay = 'السبت';
   String dropdownSubject = Subject.subjectsList[0].name;
-  String dropDownStartingTime = startingTime[0];
-  String dropDownEndingTime = endingTime[0];
+  String? dropDownStartingTime;
+  //= startingTime[0];
+  String? dropDownEndingTime;
+  // = endingTime[0];
 
   final days = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
   static const startingTime = ['8', '9', '10', '11', '12', '1', '2'];
@@ -167,6 +131,7 @@ class _ScheduleState extends State<Schedule> {
 
   void showAddNewSubjectDialog(BuildContext ctx) {
     showDialog(
+        barrierDismissible: false,
         context: ctx,
         builder: (ctx) {
           return AlertDialog(
@@ -182,6 +147,7 @@ class _ScheduleState extends State<Schedule> {
                   child: Column(
                     children: <Widget>[
                       Container(
+                        //subject drop down
                         margin: EdgeInsets.only(left: 10, bottom: 5),
                         height: 45,
                         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -214,6 +180,7 @@ class _ScheduleState extends State<Schedule> {
                         ),
                       ),
                       Container(
+                        //day drop down
                         margin: EdgeInsets.only(top: 10, left: 10),
                         height: 45,
                         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -248,6 +215,7 @@ class _ScheduleState extends State<Schedule> {
                       Row(
                         children: [
                           Flexible(
+                            //ending time dropDown
                             flex: 1,
                             child: Container(
                               margin: EdgeInsets.only(top: 10, left: 10),
@@ -271,7 +239,7 @@ class _ScheduleState extends State<Schedule> {
                                     color: Colors.deepPurpleAccent,
                                   ),
                                   onChanged: (String? newValue) => setState(() {
-                                    dropDownEndingTime = newValue!;
+                                    dropDownEndingTime = newValue;
                                   }),
                                   items: endingTime.map((String value) {
                                     return DropdownMenuItem(
@@ -284,6 +252,7 @@ class _ScheduleState extends State<Schedule> {
                             ),
                           ),
                           Flexible(
+                            //starting time dropDown
                             flex: 1,
                             child: Container(
                               margin: EdgeInsets.only(top: 10, left: 10),
@@ -298,6 +267,7 @@ class _ScheduleState extends State<Schedule> {
                               ),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<String>(
+                                  hint: Text('من'),
                                   isExpanded: true,
                                   value: dropDownStartingTime,
                                   elevation: 16,
@@ -332,15 +302,28 @@ class _ScheduleState extends State<Schedule> {
               ),
             ),
             actions: [
-              ElevatedButton(
-                child: Text("Submit"),
+              TextButton(
+                child: Text(
+                  'إلغاء',
+                  style: TextStyle(fontSize: 18),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              TextButton(
+                child: Text(
+                  "أضف الموعد",
+                  style: TextStyle(fontSize: 18),
+                ),
                 onPressed: () {
-                  if (int.parse(dropDownStartingTime) >=
-                      int.parse(dropDownEndingTime)) {
+                  if (startingTime.indexOf(dropDownStartingTime!) >
+                      endingTime.indexOf(dropDownEndingTime!)) {
                     Fluttertoast.showToast(
                       msg: "يجب ان تكون نهاية الوقت اكبر من بدايته!!",
                       toastLength: Toast.LENGTH_LONG,
                     );
+
+                    var x = startingTime.indexOf(dropDownStartingTime!);
+                    var y = endingTime.indexOf(dropDownEndingTime!);
 
                     return;
                   }
@@ -357,20 +340,49 @@ class _ScheduleState extends State<Schedule> {
                     Lecture(
                       subject: dropdownSubject,
                       day: dropdownDay,
-                      startingTime: dropDownStartingTime,
-                      endingTime: dropDownEndingTime,
+                      startingTime: dropDownStartingTime!,
+                      endingTime: dropDownEndingTime!,
                       place: placeInput.text,
                     ),
                   );
                   Lecture.sortLecturesList();
-                  // ignore: unnecessary_this
-                  this.setState(
-                      () {}); // this setState is to refresh the schedule screen when a new lecture is added
-
-                  Navigator.of(context).pop();
+                  setState(() {
+                    placeInput.clear();
+                  });
                 },
-              )
+              ),
             ],
+          );
+        });
+  }
+
+  void showDeleteLectureDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: SizedBox(
+              height: 100,
+              child: Column(
+                children: [
+                  TextField(
+                    controller: numberOfLectureToBeDeleted,
+                    decoration: InputDecoration(
+                        hintText: 'ادخل رقم السطر اللي بدك تحذفه'),
+                    keyboardType: TextInputType.number,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Lecture.deleteLectureAtNumber(
+                          int.parse(numberOfLectureToBeDeleted.text));
+                      setState(() {});
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Delete'),
+                  ),
+                ],
+              ),
+            ),
           );
         });
   }
