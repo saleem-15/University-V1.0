@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import '../models/lectures.dart';
 
 class DailySchedule extends StatelessWidget {
@@ -12,6 +13,30 @@ class DailySchedule extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daily Schedule'),
+        // actions: [
+        //   PopupMenuButton(
+        //       onSelected: (value) {
+        //         if (value == 1) {
+        //           // showDeleteLectureDialog(context);
+        //         }
+        //       },
+        //       shape: RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.circular(10)),
+        //       itemBuilder: (ctx) => [
+        //             const PopupMenuItem(
+        //               child: Text('System default'),
+        //               value: 1,
+        //             ),
+        //             const PopupMenuItem(
+        //               child: Text('Light theme'),
+        //               value: 1,
+        //             ),
+        //             const PopupMenuItem(
+        //               child: Text('Dark theme'),
+        //               value: 1,
+        //             ),
+        //           ]),
+        // ],
       ),
       body: todayLectures.isEmpty
           ? Column(

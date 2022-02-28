@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:university/models/subject.dart';
 import 'screens/subjects_screen.dart';
@@ -10,13 +11,13 @@ import 'themes/themes.dart';
 
 late Box box;
 Future<void> main() async {
-  await Hive.initFlutter();
-  await Hive.openBox('Box');
-  box = Hive.box('Box');
+  // await Hive.initFlutter();
+  // await Hive.openBox('Box');
+  // box = Hive.box('Box');
 
-  List<Subject> x = [Subject(name: 'math'), Subject(name: 'science')];
+  // List<Subject> x = [Subject(name: 'math'), Subject(name: 'science')];
 
-  box.add(x);
+  // box.add(x);
 
   // Hive.registerAdapter(MyObjectAdapter());
 
@@ -24,13 +25,15 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'University',
-      theme: Themes.darkTheme,
+      theme: Themes.lightTheme,
+      // flutter detects if the system is in dark mode ,and it will use the theme in the attribue (darkTheme)
+      darkTheme: Themes.darkTheme,
       home: HomePage(),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:university/themes/themes.dart';
 import '../models/subject.dart';
 import 'subject_details.dart';
 
@@ -58,10 +59,15 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
   Widget showSubjectCardToScreen(Subject subject) {
     return Card(
       margin: const EdgeInsets.only(bottom: 15),
-      elevation: 5,
+      // elevation: Themes.lightTheme.cardTheme.elevation,
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: ListTile(
+          tileColor: Colors.transparent,
+          title: Text(
+            subject.name,
+            style: const TextStyle(fontSize: 22),
+          ),
           onTap: () {
             Navigator.push(
               context,
@@ -74,10 +80,6 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
               setState(() {});
             });
           },
-          title: Text(
-            subject.name,
-            style: const TextStyle(fontSize: 22),
-          ),
         ),
       ),
     );
@@ -88,8 +90,6 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
         context: context,
         builder: (_) {
           return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: const Text('Add new subject'),
             content: SizedBox(
               height: 130,
@@ -97,12 +97,8 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                 children: [
                   TextField(
                     controller: newSubjectName,
-                    decoration: const InputDecoration(
-                        constraints: BoxConstraints(maxHeight: 50),
-                        label: Text('Subject name'),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)))),
+                    decoration:
+                        const InputDecoration(labelText: 'Subject name'),
                   ),
                   const Padding(padding: EdgeInsets.only(top: 15)),
                   ElevatedButton(

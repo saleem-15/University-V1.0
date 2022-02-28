@@ -28,8 +28,6 @@ class _ScheduleState extends State<Schedule> {
                   showDeleteLectureDialog(context);
                 }
               },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
               itemBuilder: (ctx) => [
                     PopupMenuItem(
                       child: const Text("احذف موعد"),
@@ -157,7 +155,7 @@ class _ScheduleState extends State<Schedule> {
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                               width: 2,
-                              color: Colors.blue,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                           child: DropdownButtonHideUnderline(
@@ -189,7 +187,7 @@ class _ScheduleState extends State<Schedule> {
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                               width: 2,
-                              color: Colors.blue,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                           child: DropdownButtonHideUnderline(
@@ -222,7 +220,7 @@ class _ScheduleState extends State<Schedule> {
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     width: 2,
-                                    color: Colors.blue,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                                 child: DropdownButtonHideUnderline(
@@ -256,7 +254,7 @@ class _ScheduleState extends State<Schedule> {
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     width: 2,
-                                    color: Colors.blue,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                                 child: DropdownButtonHideUnderline(
@@ -289,20 +287,10 @@ class _ScheduleState extends State<Schedule> {
                           // padding: EdgeInsets.symmetric(horizontal: 5),
                           child: TextField(
                             controller: placeInput,
-                            decoration: const InputDecoration(
-                                constraints: BoxConstraints(maxHeight: 45),
-                                labelText: 'القاعة',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0)))),
+                            decoration:
+                                const InputDecoration(labelText: 'القاعة'),
                           ),
                         ),
-                        // TextFormField(
-                        //   controller: placeInput,
-                        //   decoration: InputDecoration(
-                        //     labelText: 'القاعة',
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

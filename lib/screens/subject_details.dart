@@ -12,8 +12,6 @@ class SubjectDetails extends StatelessWidget {
         title: Text(subject.name),
         actions: [
           PopupMenuButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
               onSelected: (value) {
                 if (value == 1) {
                   showDeleteConfirmation(context);
@@ -39,8 +37,6 @@ class SubjectDetails extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: const Text('Are You sure you want to delete this subject'),
             actions: [
               TextButton(
@@ -49,6 +45,8 @@ class SubjectDetails extends StatelessWidget {
               TextButton(
                   onPressed: () {
                     Subject.deleteSubject(subject);
+                    // when pressing delete subject =>
+                    // remove (Delete Confirmation) dialog && then get out from (subject details page)
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
                   },
@@ -58,7 +56,6 @@ class SubjectDetails extends StatelessWidget {
         });
   }
 }
-
 
 // class MyApp extends StatefulWidget {
 //   @override
@@ -89,7 +86,7 @@ class SubjectDetails extends StatelessWidget {
 //                 ]
 //             )
 //           ],
-//         ),      
+//         ),
 //       )
 //     );
 //   }
