@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import '../models/lectures.dart';
 import '../models/subject.dart';
-import 'package:hive/hive.dart';
 // ignore: unused_import
 import 'subjects_screen.dart';
 
@@ -130,7 +129,8 @@ class _ScheduleState extends State<Schedule> {
 
   void showAddNewSubjectDialog(BuildContext ctx) {
     showDialog(
-        barrierDismissible: false,
+        barrierDismissible:
+            false, //make the dialog not to close when clicking on the screen
         context: ctx,
         builder: (ctx) {
           return AlertDialog(
@@ -167,7 +167,8 @@ class _ScheduleState extends State<Schedule> {
                               onChanged: (String? newValue) => setState(() {
                                 dropdownSubject = newValue!;
                               }),
-                              items: Subject.subjectsList.map((Subject sub) {
+                              items:
+                                  Subject.subjectsBox.values.map((Subject sub) {
                                 return DropdownMenuItem(
                                   value: sub.name,
                                   child: Text(sub.name),
@@ -340,6 +341,7 @@ class _ScheduleState extends State<Schedule> {
                       place: placeInput.text,
                     ),
                   );
+
                   Lecture.sortLecturesList();
                   setState(() {
                     placeInput.clear();

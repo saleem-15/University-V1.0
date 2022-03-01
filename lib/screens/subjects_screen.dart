@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:university/themes/themes.dart';
 import '../models/subject.dart';
 import 'subject_details.dart';
 
@@ -38,7 +37,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                 //- 112 (56*2) appBar height + bottomNavigationBar height
 
                 child: ListView(
-                  children: Subject.subjectsList
+                  children: Subject.subjectsBox.values
                       .map((subject) => showSubjectCardToScreen(subject))
                       .toList(),
                 ),
@@ -52,7 +51,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
 
   void addNewSubject(String subjectName) {
     setState(() {
-      Subject.subjectsList.add(Subject(name: subjectName));
+      Subject.addSubject(Subject(name: subjectName));
     });
   }
 

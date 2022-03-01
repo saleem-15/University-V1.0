@@ -1,42 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import '../models/lectures.dart';
 
-class DailySchedule extends StatelessWidget {
+class DailySchedule extends StatefulWidget {
+  const DailySchedule({Key? key}) : super(key: key);
+
+  @override
+  State<DailySchedule> createState() => _DailyScheduleState();
+}
+
+class _DailyScheduleState extends State<DailySchedule> {
   List<Lecture> todayLectures = [];
 
-  DailySchedule({Key? key}) : super(key: key);
-
+  /*when the build function is called =>
+  -calculateTodayLectures() method is called ,It puts all the lectures of today in (todayLectures List)
+  -the Scaffold widget builds the screen and it takes the lectures from (todayLectures List)
+  */
   @override
   Widget build(BuildContext context) {
     calculateTodayLectures();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daily Schedule'),
-        // actions: [
-        //   PopupMenuButton(
-        //       onSelected: (value) {
-        //         if (value == 1) {
-        //           // showDeleteLectureDialog(context);
-        //         }
-        //       },
-        //       shape: RoundedRectangleBorder(
-        //           borderRadius: BorderRadius.circular(10)),
-        //       itemBuilder: (ctx) => [
-        //             const PopupMenuItem(
-        //               child: Text('System default'),
-        //               value: 1,
-        //             ),
-        //             const PopupMenuItem(
-        //               child: Text('Light theme'),
-        //               value: 1,
-        //             ),
-        //             const PopupMenuItem(
-        //               child: Text('Dark theme'),
-        //               value: 1,
-        //             ),
-        //           ]),
-        // ],
       ),
       body: todayLectures.isEmpty
           ? Column(
@@ -124,7 +108,7 @@ class DailySchedule extends StatelessWidget {
 
     todayLectures.clear(); // clear the list of the lectures
 
-    for (var lecuture in Lecture.lecturesList) {
+    for (var lecuture in Lecture.lecturesBox.values.toList()) {
       //add today's lectures to the list
       if (lecuture.dayNum == currentDay) {
         todayLectures.add(lecuture);

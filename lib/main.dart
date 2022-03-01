@@ -1,31 +1,31 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:university/models/subject.dart';
+import 'models/lectures.dart';
+import 'models/subject.dart';
 import 'screens/subjects_screen.dart';
 import 'screens/schedule_screen.dart';
 import 'screens/daily_schedule.dart';
 import 'themes/themes.dart';
 
-late Box box;
+const lecturesBoxName = 'LecturesBox';
+const subjectBoxName = 'SubjectsBox';
 Future<void> main() async {
-  // await Hive.initFlutter();
-  // await Hive.openBox('Box');
-  // box = Hive.box('Box');
+  //Hive related code...........................................................
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(LectureAdapter());
+  Hive.registerAdapter(SubjectAdapter());
+  await Hive.openBox<Lecture>(lecturesBoxName);
+  await Hive.openBox<Subject>(subjectBoxName);
 
-  // List<Subject> x = [Subject(name: 'math'), Subject(name: 'science')];
-
-  // box.add(x);
-
-  // Hive.registerAdapter(MyObjectAdapter());
-
+  //.............................................................................
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

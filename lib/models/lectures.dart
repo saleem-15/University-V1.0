@@ -1,10 +1,30 @@
+import 'package:hive/hive.dart';
+
+import '../main.dart';
+
+part 'lectures.g.dart';
+
+@HiveType(typeId: 1)
 class Lecture {
+  @HiveField(1)
   String subject;
+
+  @HiveField(2)
   String day;
+
+  @HiveField(3)
   String startingTime;
+
+  @HiveField(4)
   String endingTime;
+
+  @HiveField(5)
   String place;
+
+  @HiveField(6)
   late int value; //used for sorting
+
+  @HiveField(7)
   late int dayNum; //used in calculation when displaying daily schedule
 
   /*
@@ -56,23 +76,6 @@ class Lecture {
         dayNum = 5; //friday
     }
   }
-
-  static var lecturesList = [
-    Lecture(
-      subject: 'جرافيك حاسوب',
-      day: 'الأحد',
-      startingTime: '12',
-      endingTime: '2',
-      place: 'A1-202',
-    ),
-    Lecture(
-      subject: 'قواعد بيانات',
-      day: 'الاثنين',
-      startingTime: '11',
-      endingTime: '12',
-      place: 'A1-302',
-    )
-  ];
 
   int calculateValue(String day, String startingTime) {
     int result = 0;
@@ -132,17 +135,35 @@ class Lecture {
     return 0; // this line has no meaning (JUST TO PLEASE THE STUPID COMPILER)
   }
 
+  static var lecturesList = lecturesBox.values.toList();
+
+  static void updateLecturesBox() {
+    //Clears the box ,Then takes all lectures from lectures list in the same order
+    lecturesBox.clear();
+    lecturesBox.addAll(lecturesList);
+  }
+
   static void sortLecturesList() {
     lecturesList.sort((a, b) {
       return a.value.compareTo(b.value);
     });
+
+    updateLecturesBox();
   }
 
   static void deleteLecture(Lecture lecture) {
     lecturesList.remove(lecture);
+
+    updateLecturesBox();
   }
 
   static void deleteLectureAtNumber(int number) {
     lecturesList.removeAt(number - 1);
+
+    updateLecturesBox();
+  }
+
+  static Box<Lecture> get lecturesBox {
+    return Hive.box<Lecture>(lecturesBoxName);
   }
 }
