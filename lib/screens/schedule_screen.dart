@@ -43,31 +43,31 @@ class _ScheduleState extends State<Schedule> {
         child: Column(
           children: [
             FittedBox(
-              fit: BoxFit.cover,
+              // fit: BoxFit.none,
               child: DataTable(
                 columns: [
                   DataColumn(
                     label: Text(
                       'القاعة',
-                      style: TextStyle(fontSize: 26),
+                      style: TextStyle(fontSize: 24),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'المادة',
-                      style: TextStyle(fontSize: 26),
+                      style: TextStyle(fontSize: 24),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'الموعد',
-                      style: TextStyle(fontSize: 26),
+                      style: TextStyle(fontSize: 24),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'اليوم',
-                      style: TextStyle(fontSize: 26),
+                      style: TextStyle(fontSize: 24),
                     ),
                   ),
                 ],
@@ -332,7 +332,7 @@ class _ScheduleState extends State<Schedule> {
 
                     return;
                   }
-                  Lecture.lecturesList.add(
+                  Lecture.addLecture(
                     Lecture(
                       subject: dropdownSubject!,
                       day: dropdownDay,

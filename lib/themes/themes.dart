@@ -8,6 +8,7 @@ class Themes {
     popupMenuTheme: popupMenuThemeData,
     inputDecorationTheme: inputDecorationTheme,
     textButtonTheme: textButtonTheme,
+    primaryTextTheme: generalTextTheme,
   );
 
   static final darkTheme = ThemeData(
@@ -22,10 +23,14 @@ class Themes {
     popupMenuTheme: popupMenuThemeData,
     inputDecorationTheme: inputDecorationTheme,
     textButtonTheme: textButtonTheme,
+    primaryTextTheme: generalTextTheme,
   );
 
 //******************************* Themes specific for each component of the app *******************************
-
+  static TextTheme generalTextTheme = const TextTheme(
+      // titleLarge: TextStyle(fontSize: 26 ,color:text ),
+      //  bodyLarge: TextStyle(fontSize: 26),
+      );
   static CardTheme cardTheme = CardTheme(
     elevation: 7,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),

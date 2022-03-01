@@ -9,7 +9,7 @@ to store any kind of objects you need to write in the file (part 'file_name.g.da
   the file that has the class that we want to save its data */
 part 'subject.g.dart';
 
-@HiveType(typeId: 3)
+@HiveType(typeId: 2)
 class Subject extends HiveObject {
   @HiveField(1)
   late int id;

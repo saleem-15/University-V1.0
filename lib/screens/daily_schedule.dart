@@ -9,7 +9,7 @@ class DailySchedule extends StatefulWidget {
 }
 
 class _DailyScheduleState extends State<DailySchedule> {
-  List<Lecture> todayLectures = [];
+  late List<Lecture> todayLectures;
 
   /*when the build function is called =>
   -calculateTodayLectures() method is called ,It puts all the lectures of today in (todayLectures List)
@@ -46,22 +46,22 @@ class _DailyScheduleState extends State<DailySchedule> {
                         DataColumn(
                             label: Text(
                           'القاعة',
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(fontSize: 24),
                         )),
                         DataColumn(
                             label: Text(
                           'المادة',
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(fontSize: 24),
                         )),
                         DataColumn(
                             label: Text(
                           'الموعد',
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(fontSize: 24),
                         )),
                         DataColumn(
                           label: Text(
                             'اليوم',
-                            style: TextStyle(fontSize: 22),
+                            style: TextStyle(fontSize: 24),
                           ),
                         ),
                       ],
@@ -105,10 +105,11 @@ class _DailyScheduleState extends State<DailySchedule> {
 
   void calculateTodayLectures() {
     var currentDay = DateTime.now().weekday;
+    var x = Lecture.lecturesBox.values.toList();
 
-    todayLectures.clear(); // clear the list of the lectures
+    todayLectures = []; // clear the list of the lectures
 
-    for (var lecuture in Lecture.lecturesBox.values.toList()) {
+    for (var lecuture in x) {
       //add today's lectures to the list
       if (lecuture.dayNum == currentDay) {
         todayLectures.add(lecuture);

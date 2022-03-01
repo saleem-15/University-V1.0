@@ -137,10 +137,12 @@ class Lecture {
 
   static var lecturesList = lecturesBox.values.toList();
 
-  static void updateLecturesBox() {
+  //List<Lecture>
+
+  static void updateLecturesBox() async {
     //Clears the box ,Then takes all lectures from lectures list in the same order
-    lecturesBox.clear();
-    lecturesBox.addAll(lecturesList);
+    await lecturesBox.clear();
+    await lecturesBox.addAll(lecturesList);
   }
 
   static void sortLecturesList() {
@@ -148,6 +150,11 @@ class Lecture {
       return a.value.compareTo(b.value);
     });
 
+    updateLecturesBox();
+  }
+
+  static void addLecture(Lecture lecture) {
+    lecturesList.add(lecture);
     updateLecturesBox();
   }
 
